@@ -18,7 +18,7 @@ namespace CustomerManagementData
 
         public List<Customer> GetCustomers()
         {
-            string selectStatement = "SELECT * FROM customers;";
+            string selectStatement = "SELECT * FROM customer;";
 
             SqlCommand selectCommand = new SqlCommand(selectStatement, sqlConnection);
 
@@ -59,7 +59,7 @@ namespace CustomerManagementData
         {
             int success;
 
-            string insertStatement = "INSERT INTO customers (FirstName, LastName, Orders, DateOrdered, OrderStatus) VALUES (@FirstName, @LastName, @Orders, @DateOrdered, @Status)";
+            string insertStatement = "INSERT INTO customer (FirstName, LastName, Orders, DateOrdered, OrderStatus) VALUES (@FirstName, @LastName, @Orders, @DateOrdered, @Status)";
 
             SqlCommand insertCommand = new SqlCommand(insertStatement, sqlConnection);
 
@@ -80,7 +80,7 @@ namespace CustomerManagementData
         {
             int success;
 
-            string updateStatement = "UPDATE customers SET LastName = @LastName WHERE FirstName = @FirstName";
+            string updateStatement = "UPDATE customer SET LastName = @LastName WHERE FirstName = @FirstName";
             SqlCommand updateCommand = new SqlCommand(updateStatement, sqlConnection);
 
             updateCommand.Parameters.AddWithValue("@FirstName", firstName);
@@ -97,7 +97,7 @@ namespace CustomerManagementData
         {
             int success;
 
-            string deleteStatement = "DELETE FROM customers WHERE FirstName = @FirstName AND LastName = @LastName";
+            string deleteStatement = "DELETE FROM customer WHERE FirstName = @FirstName AND LastName = @LastName";
             SqlCommand deleteCommand = new SqlCommand(deleteStatement, sqlConnection);
 
             deleteCommand.Parameters.AddWithValue("@FirstName", firstName);

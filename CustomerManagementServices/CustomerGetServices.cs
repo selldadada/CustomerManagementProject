@@ -7,7 +7,7 @@ namespace CustomerManagementServices
     {
         public List<Customer> GetAllCustomers()
         {
-            SqlDbData customerData = new SqlDbData(); // Fixed the class name
+            SqlDbData customerData = new SqlDbData();
 
             return customerData.GetCustomers();
         }
@@ -15,7 +15,7 @@ namespace CustomerManagementServices
         public List<Customer> GetCustomersByStatus(string customerStatus)
         {
             List<Customer> customersByStatus = new List<Customer>();
-            List<Customer> allCustomers = GetAllCustomers(); // Retrieve all customers first
+            List<Customer> allCustomers = GetAllCustomers();
 
             foreach (var customer in allCustomers)
             {
@@ -30,14 +30,14 @@ namespace CustomerManagementServices
 
         public Customer GetCustomer(string firstName, string lastName)
         {
-            Customer foundCustomer = null; // Changed to null to check if found later
+            Customer foundCustomer = null;
 
             foreach (var customer in GetAllCustomers())
             {
                 if (customer.FirstName == firstName && customer.LastName == lastName)
                 {
                     foundCustomer = customer;
-                    break; // Exit loop once the customer is found
+                    break;
                 }
             }
 
@@ -46,14 +46,14 @@ namespace CustomerManagementServices
 
         public Customer GetCustomer(string firstName)
         {
-            Customer foundCustomer = null; // Changed to null to check if found later
+            Customer foundCustomer = null;
 
             foreach (var customer in GetAllCustomers())
             {
                 if (customer.FirstName == firstName)
                 {
                     foundCustomer = customer;
-                    break; // Exit loop once the customer is found
+                    break;
                 }
             }
 
