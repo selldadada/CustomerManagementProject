@@ -20,7 +20,7 @@ namespace CustomerManagementData
 
         public int AddCustomer(Customer customer)
         {
-            return sqlData.AddCustomer(customer.FirstName, customer.LastName);
+            return sqlData.AddCustomer(customer.FirstName, customer.LastName, customer.Orders, customer.DateOrdered, customer.OrderStatus);
         }
 
         public int UpdateCustomer(Customer customer)

@@ -21,14 +21,14 @@ namespace AccountManagement.API.Controllers
         [HttpGet]
         public IEnumerable<CustomerManagementAPI.Customer> GetCustomers()
         {
-            var activecustomers = _customerGetServices.GetCustomersByStatus("Settled");
+            var allCustomers = _customerGetServices.GetAllCustomers();
 
-            List<CustomerManagementAPI.Customer> users = new List<Customer>();
+            List<CustomerManagementAPI.Customer> users = new List<CustomerManagementAPI.Customer>();
 
-            foreach (var item in activecustomers)
+            foreach (var item in allCustomers)
             {
-                users.Add(new Customer { 
-                    CustomerID = item.CustomerID,   
+                users.Add(new CustomerManagementAPI.Customer
+                {
                     FirstName = item.FirstName,
                     LastName = item.LastName,
                     Orders = item.Orders,
@@ -43,7 +43,12 @@ namespace AccountManagement.API.Controllers
         [HttpPost]
         public JsonResult AddCustomer(Customer request)
         {
-            var result = _customerTransactionServices.CreateCustomer(request.FirstName, request.LastName);
+            var result = _customerTransactionServices.CreateCustomer(
+                request.FirstName, 
+                request.LastName,
+                request.Orders,
+                request.DateOrdered,
+                request.OrderStatus);
 
             return new JsonResult(result);
         }
@@ -61,7 +66,7 @@ namespace AccountManagement.API.Controllers
         {
             var customerModel = new CustomerManagementModel.Customer
             {
-                CustomerID = request.CustomerID,
+
                 FirstName = request.FirstName,
                 LastName = request.LastName,
                 Orders = request.Orders,

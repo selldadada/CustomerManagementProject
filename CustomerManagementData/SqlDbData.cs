@@ -29,22 +29,19 @@ namespace CustomerManagementData
 
             while (reader.Read())
             {
-                string firstName = reader["FirstName"].ToString();
-                string lastName = reader["LastName"].ToString();
-                string orders = reader["Orders"].ToString();
-                string dateOrderedStr = reader["DateOrdered"].ToString();
-                DateTime dateOrdered = DateTime.Parse(dateOrderedStr, CultureInfo.InvariantCulture);
-                DateOnly dateOrderedOnly = DateOnly.FromDateTime(dateOrdered);
-                DateTime dateOrderedDateTime = dateOrderedOnly.ToDateTime(TimeOnly.MinValue);
-                string orderStatus = reader["OrderStatus"].ToString();
+                string FirstName = reader["FirstName"].ToString();
+                string LastName = reader["LastName"].ToString();
+                string Orders = reader["Orders"].ToString();
+                string DateOrdered = reader["DateOrdered"].ToString();
+                string OrderStatus = reader["OrderStatus"].ToString();
 
                 Customer readCustomer = new Customer
                 {
-                    FirstName = firstName,
-                    LastName = lastName,
-                    Orders = orders,
-                    DateOrdered = dateOrderedDateTime,
-                    OrderStatus = orderStatus,
+                    FirstName = FirstName,
+                    LastName = LastName,
+                    Orders = Orders,
+                    DateOrdered = DateOrdered,
+                    OrderStatus = OrderStatus,
                 };
 
                 customers.Add(readCustomer);
@@ -55,19 +52,19 @@ namespace CustomerManagementData
             return customers;
         }
 
-        public int AddCustomer(string firstName, string lastName)
+        public int AddCustomer(string FirstName, string LastName, string Orders, string DateOrdered, string OrderStatus)
         {
             int success;
 
-            string insertStatement = "INSERT INTO customer (FirstName, LastName, Orders, DateOrdered, OrderStatus) VALUES (@FirstName, @LastName, @Orders, @DateOrdered, @Status)";
+            string insertStatement = "INSERT INTO customer (FirstName, LastName, Orders, DateOrdered, OrderStatus) VALUES (@FirstName, @LastName, @Orders, @DateOrdered, @OrderStatus)";
 
             SqlCommand insertCommand = new SqlCommand(insertStatement, sqlConnection);
 
-            insertCommand.Parameters.AddWithValue("@FirstName", firstName);
-            insertCommand.Parameters.AddWithValue("@LastName", lastName);
-            insertCommand.Parameters.AddWithValue("@Orders", "");
-            insertCommand.Parameters.AddWithValue("@DateOrdered", DateTime.Now);
-            insertCommand.Parameters.AddWithValue("@Status", 1);
+            insertCommand.Parameters.AddWithValue("@FirstName", FirstName);
+            insertCommand.Parameters.AddWithValue("@LastName", LastName);
+            insertCommand.Parameters.AddWithValue("@Orders", Orders);
+            insertCommand.Parameters.AddWithValue("@DateOrdered", DateOrdered);
+            insertCommand.Parameters.AddWithValue("@OrderStatus", OrderStatus);
 
             sqlConnection.Open();
             success = insertCommand.ExecuteNonQuery();

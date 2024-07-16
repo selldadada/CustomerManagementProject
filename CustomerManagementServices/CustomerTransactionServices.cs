@@ -20,9 +20,9 @@ namespace CustomerManagementServices
             return result;
         }
 
-        public bool CreateCustomer(string FirstName, string LastName)
+        public bool CreateCustomer(string FirstName, string LastName, string Orders, string DateOrdered, string OrderStatus)
         {
-            Customer customers = new Customer { FirstName = FirstName, LastName = LastName };
+            Customer customers = new Customer { FirstName = FirstName, LastName = LastName, Orders = Orders, DateOrdered = DateOrdered, OrderStatus = OrderStatus};
 
             return CreateCustomer(customers);
         }
