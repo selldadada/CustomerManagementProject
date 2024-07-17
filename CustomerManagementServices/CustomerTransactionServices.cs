@@ -8,23 +8,30 @@ namespace CustomerManagementServices
         CustomerValidationServices validationServices = new CustomerValidationServices();
         CustomerData customerData = new CustomerData();
 
-        public bool CreateCustomer(Customer customers)
+        public bool CreateCustomer(string firstName, string lastName, string orders, string dateOrdered, string orderStatus)
+        {
+            Customer customer = new Customer
+            {
+                FirstName = firstName,
+                LastName = lastName,
+                Orders = orders,
+                DateOrdered = dateOrdered,
+                OrderStatus = orderStatus
+            };
+
+            return CreateCustomer(customer);
+        }
+
+        public bool CreateCustomer(Customer customer)
         {
             bool result = false;
 
-            if (validationServices.CheckIfCustomerExists(customers.FirstName, customers.LastName))
+            if (!validationServices.CheckIfCustomerExists(customer.FirstName, customer.LastName))
             {
-                result = customerData.AddCustomer(customers) > 0;
+                result = customerData.AddCustomer(customer) > 0;
             }
 
             return result;
-        }
-
-        public bool CreateCustomer(string FirstName, string LastName, string Orders, string DateOrdered, string OrderStatus)
-        {
-            Customer customers = new Customer { FirstName = FirstName, LastName = LastName, Orders = Orders, DateOrdered = DateOrdered, OrderStatus = OrderStatus};
-
-            return CreateCustomer(customers);
         }
 
         public bool UpdateCustomer(Customer customers)
@@ -39,11 +46,16 @@ namespace CustomerManagementServices
             return result;
         }
 
-        public bool UpdateCustomer(string FirstName, string LastName)
+        public bool UpdateCustomer(string firstName, string lastName, string orderStatus)
         {
-            Customer customers = new Customer { FirstName = FirstName, LastName = LastName };
+            Customer customer = new Customer
+            {
+                FirstName = firstName,
+                LastName = lastName,
+                OrderStatus = orderStatus
+            };
 
-            return UpdateCustomer(customers);
+            return UpdateCustomer(customer);
         }
 
         public bool DeleteCustomer(Customer customers)

@@ -25,7 +25,7 @@ namespace CustomerManagementData
 
         public int UpdateCustomer(Customer customer)
         {
-            return sqlData.UpdateCustomer(customer.FirstName, customer.LastName);
+            return sqlData.UpdateCustomer(customer.FirstName, customer.LastName, customer.OrderStatus);
         }
 
         public int DeleteCustomer(Customer customer)

@@ -44,7 +44,7 @@ namespace AccountManagement.API.Controllers
         public JsonResult AddCustomer(Customer request)
         {
             var result = _customerTransactionServices.CreateCustomer(
-                request.FirstName, 
+                request.FirstName,
                 request.LastName,
                 request.Orders,
                 request.DateOrdered,
@@ -56,7 +56,7 @@ namespace AccountManagement.API.Controllers
         [HttpPatch]
         public JsonResult UpdateCustomer(Customer request)
         {
-            var result = _customerTransactionServices.UpdateCustomer(request.FirstName, request.LastName);
+            var result = _customerTransactionServices.UpdateCustomer(request.FirstName, request.LastName, request.OrderStatus);
 
             return new JsonResult(result);
         }

@@ -7,7 +7,7 @@ namespace CustomerManagementData
     public class SqlDbData
     {
         string connectionString
-            = "Server=localhost\\SQLEXPRESS;Database=CustomerManagementDb;Trusted_Connection=True;";
+            = "Server=localhost\\SQLEXPRESS;Database=CustomerManagementDb;Integrated Security=True;";
 
         SqlConnection sqlConnection;
 
@@ -52,40 +52,53 @@ namespace CustomerManagementData
             return customers;
         }
 
-        public int AddCustomer(string FirstName, string LastName, string Orders, string DateOrdered, string OrderStatus)
+        public int AddCustomer(Customer customer)
+        {
+            return AddCustomer(customer.FirstName, customer.LastName, customer.Orders, customer.DateOrdered, customer.OrderStatus);
+        }
+
+        public int AddCustomer(string firstName, string lastName, string orders, string dateOrdered, string orderStatus)
         {
             int success;
 
             string insertStatement = "INSERT INTO customer (FirstName, LastName, Orders, DateOrdered, OrderStatus) VALUES (@FirstName, @LastName, @Orders, @DateOrdered, @OrderStatus)";
 
-            SqlCommand insertCommand = new SqlCommand(insertStatement, sqlConnection);
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand insertCommand = new SqlCommand(insertStatement, sqlConnection))
+                {
+                    insertCommand.Parameters.AddWithValue("@FirstName", firstName);
+                    insertCommand.Parameters.AddWithValue("@LastName", lastName);
+                    insertCommand.Parameters.AddWithValue("@Orders", orders);
+                    insertCommand.Parameters.AddWithValue("@DateOrdered", dateOrdered);
+                    insertCommand.Parameters.AddWithValue("@OrderStatus", orderStatus);
 
-            insertCommand.Parameters.AddWithValue("@FirstName", FirstName);
-            insertCommand.Parameters.AddWithValue("@LastName", LastName);
-            insertCommand.Parameters.AddWithValue("@Orders", Orders);
-            insertCommand.Parameters.AddWithValue("@DateOrdered", DateOrdered);
-            insertCommand.Parameters.AddWithValue("@OrderStatus", OrderStatus);
-
-            sqlConnection.Open();
-            success = insertCommand.ExecuteNonQuery();
-            sqlConnection.Close();
+                    sqlConnection.Open();
+                    success = insertCommand.ExecuteNonQuery();
+                }
+            }
 
             return success;
         }
 
-        public int UpdateCustomer(string firstName, string lastName)
+        public int UpdateCustomer(string firstName, string lastName, string orderStatus)
         {
             int success;
 
-            string updateStatement = "UPDATE customer SET LastName = @LastName WHERE FirstName = @FirstName";
-            SqlCommand updateCommand = new SqlCommand(updateStatement, sqlConnection);
+            string updateStatement = "UPDATE customer SET OrderStatus = @OrderStatus WHERE FirstName = @FirstName AND LastName = @LastName";
 
-            updateCommand.Parameters.AddWithValue("@FirstName", firstName);
-            updateCommand.Parameters.AddWithValue("@LastName", lastName);
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand updateCommand = new SqlCommand(updateStatement, sqlConnection))
+                {
+                    updateCommand.Parameters.AddWithValue("@FirstName", firstName);
+                    updateCommand.Parameters.AddWithValue("@LastName", lastName);
+                    updateCommand.Parameters.AddWithValue("@OrderStatus", orderStatus);
 
-            sqlConnection.Open();
-            success = updateCommand.ExecuteNonQuery();
-            sqlConnection.Close();
+                    sqlConnection.Open();
+                    success = updateCommand.ExecuteNonQuery();
+                }
+            }
 
             return success;
         }
