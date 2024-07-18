@@ -1,4 +1,5 @@
 ﻿using CustomerManagementModel;
+using System.ComponentModel;
 using System.Data.SqlClient;
 using System.Globalization;
 
@@ -7,7 +8,8 @@ namespace CustomerManagementData
     public class SqlDbData
     {
         string connectionString
-            = "Server=localhost\\SQLEXPRESS;Database=CustomerManagementDb;Integrated Security=True;";
+            = "Server=tcp:104.214.178.102, 1433; Database = CustomerManagementdb; User Id = sa; Password = !Finals1";
+            //= "Server=localhost\\SQLEXPRESS;Database=CustomerManagementDb;Integrated Security=True;";
 
         SqlConnection sqlConnection;
 
