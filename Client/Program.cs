@@ -10,7 +10,12 @@
                 CustomerGetServices getServices = new CustomerGetServices();
                 CustomerTransactionServices transactionServices = new CustomerTransactionServices();
                 EmailServices email = new EmailServices();
-                
+
+                bool running = true;
+
+                while (running)
+                {
+
                 var customers = getServices.GetAllCustomers();
 
                 Console.WriteLine("");
@@ -24,6 +29,7 @@
                 Console.WriteLine("2 - Add an Order");
                 Console.WriteLine("3 - Update an Order's Status");
                 Console.WriteLine("4 - Delete an Order");
+                Console.WriteLine("5 - Exit");
                 Console.WriteLine("");
                 Console.WriteLine("");
 
@@ -123,9 +129,29 @@
                                 Console.WriteLine("Failed to delete the customer order.");
                             }
                             break;
+
+                        case 5:
+                            Environment.Exit(0);
+                            break;
+
+                        default:
+                            Console.WriteLine("Invalid option. Please select a valid number.");
+                            break;
+                    }
+
+                    if (running)
+                    {
+                        Console.WriteLine("");
+                        Console.WriteLine("Press Enter to return to the Main Menu.");
+                        Console.ReadLine();
+                        Console.Clear();
                     }
                 }
-
+                else
+                {
+                    Console.WriteLine("Invalid input. Please enter a valid number.");
+                }
             }
         }
     }
+}
