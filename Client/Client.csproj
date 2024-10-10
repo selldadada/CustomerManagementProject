@@ -8,7 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CustomerManagementData\CustomerManagementData.csproj" />
+    <PackageReference Include="MailKit" Version="4.8.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\CustomerManagementProject\CustomerManagementModel.csproj" />
     <ProjectReference Include="..\CustomerManagementServices\CustomerManagementServices.csproj" />
   </ItemGroup>
